@@ -1,4 +1,7 @@
+"use client";
+import { useState, useContext } from "react";
 import Link from "next/link";
+import AuthContext from "../context/AuthContext";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +15,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function LoginForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await login(username, password); // Call login function with credentials
+  //     // Redirect to desired page after successful login (optional)
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //     // Handle login errors (e.g., display error message)
+  //   }
+  // };
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -23,22 +38,26 @@ export function LoginForm() {
       <CardContent>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="username">Username</Label>
             <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
+              id="username"
+              type="text"
+              placeholder="google4planet"
               required
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="grid gap-2">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
-                Forgot your password?
-              </Link>
             </div>
-            <Input id="password" type="password" required />
+            <Input
+              id="password"
+              type="password"
+              placeholder="*******"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <Button type="submit" className="w-full">
             Login
@@ -48,9 +67,9 @@ export function LoginForm() {
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
+          Interested in CSR Partnership?{" "}
           <Link href="#" className="underline">
-            Request us
+            Contact us
           </Link>
         </div>
       </CardContent>

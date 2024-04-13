@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import PopoverCardContent from "@/components/PopoverCardContent";
 import IndividualOrgCard from "@/components/IndividualOrgCard";
 import {
@@ -29,29 +31,40 @@ const listOfOrg = [
 ];
 
 const OrgCards = () => {
+  const [orgData, setOrgData] = useState(null);
+  const dataFetch = async () => {
+    const res = await fetch("https://fit4cause-backend.onrender.com/api/ngo");
+    const data = await res.json();
+    setOrgData(data.data);
+  };
+  useEffect(() => {
+    dataFetch();
+  }, []);
   return (
     <div className="flex flex-col max-w-3xl gap-4 ">
-      {listOfOrg.map((org, index) => {
-        return (
-          <Drawer>
-            <DrawerTrigger>
-              {" "}
-              <IndividualOrgCard
-                className="cursor-pointer"
-                key={index}
-                name={org.name}
-                description={org.description}
-              />
-            </DrawerTrigger>
-            <DrawerContent className="h-[91%]">
-              <ScrollArea className="overflow-auto p-4">
-                {/* Your content goes here */}
-                <PopoverCardContent />
-              </ScrollArea>
-            </DrawerContent>
-          </Drawer>
-        );
-      })}
+      {orgData &&
+        orgData.map((org) => {
+          return (
+            <Drawer>
+              <DrawerTrigger>
+                {" "}
+                <IndividualOrgCard
+                  className="cursor-pointer"
+                  key={org.Name}
+                  name={org.Name}
+                  description={org.About}
+                  photoLink={org.image}
+                />
+              </DrawerTrigger>
+              <DrawerContent className="h-[91%]">
+                <ScrollArea className="overflow-auto p-4">
+                  {/* Your content goes here */}
+                  <PopoverCardContent orgId={org._id} />
+                </ScrollArea>
+              </DrawerContent>
+            </Drawer>
+          );
+        })}
     </div>
   );
 };

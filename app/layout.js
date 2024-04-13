@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
+import AuthProvider from "../context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
